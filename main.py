@@ -14,6 +14,8 @@ cars = CarManager()
 screen.onkey(player.moveForward, "Up")
 screen.listen()
 
+scoreboard = Scoreboard()
+
 game_is_on = True
 while game_is_on:
     # time.sleep(0.1)
@@ -21,3 +23,14 @@ while game_is_on:
 
     cars.createNewCars()
     cars.moveCars()
+
+    for car in cars.allCars:
+        if car.distance(player) < 20:
+            game_is_on = False
+            scoreboard.gameOver()
+
+    if player.touchedFinishLine():
+        player.goToStart()
+        cars.levelUp()
+
+screen.exitonclick()
